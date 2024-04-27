@@ -14,6 +14,7 @@ export const Home = () => {
       <Header />
       {/* Main Store */}
       <ProductComp />
+      <ProductComp />
     </div>
       <FooterComp />
     </div>

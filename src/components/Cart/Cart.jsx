@@ -2,12 +2,15 @@ import { Button, Drawer } from "flowbite-react";
 import { useState } from "react";
 import { IoCartOutline } from "react-icons/io5";
 import { ImBin } from "react-icons/im";
-import { QuantityBtn } from "../Buttons";
+import { useDispatch, useSelector } from "react-redux";
+import CartItems from "./CartItems";
+import { clearCart } from "../../features/Cart/cartSlice";
+
 
 export const Cart = () => {
+  const dispatch = useDispatch()
   const [isOpen, setIsOpen] = useState(false);
-  const isCartEmpty = true;
-
+  const isCartEmpty = useSelector((state)=>state.cart.isCartEmpty)
   const handleClose = () => setIsOpen(false);
 
   return (
@@ -37,17 +40,9 @@ export const Cart = () => {
               </Button>
             </div>
             <div className={isCartEmpty ? "hidden" : "p-4"}>
-              <div className="flex justify-between">
-                <div className="flex flex-col gap-1">
-                  <p className="text-lg text-slate-800">
-                    {'Apple Pro Max 17"'}
-                  </p>
-                  <p className="text-slate-600">{"NGN" + " 1,250,000"}</p>
-                </div>
-                <QuantityBtn />
-              </div>
+             <CartItems />
               <div className="flex justify-end mt-2">
-                <Button size="sm" color="light" outline>
+                <Button size="sm" color="light" outline onClick={()=> dispatch(clearCart())}>
                   <ImBin className="mr-2 mt-0.5" /> Empty Cart
                 </Button>
               </div>

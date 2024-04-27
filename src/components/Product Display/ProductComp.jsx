@@ -2,15 +2,23 @@ import { Button } from "flowbite-react";
 import { HiPlus } from "react-icons/hi";
 import { QuantityBtn } from "../Buttons";
 
+import { useDispatch } from "react-redux";
+import { displayCart } from "../../features/Cart/cartSlice";
+import { ToastContainer } from "react-toastify";
+
 export const ProductComp = () => {
+
+  const dispatch = useDispatch()
+  const handleCartDisplay = () => {
+    dispatch(displayCart())
+  }
+ 
   return (
     <div className="p-4">
-      <div className="sm:py-8 sm:px-12 lg:px-24">
-        {"HOME / APPLE MACBOOK PRO"}
-      </div>
       <div className="sm:flex w-full gap-12 items-center justify-center mt-4">
         {/* left side */}
         <div>
+        {"HOME / APPLE MACBOOK PRO"}
           <img
             src={
               "https://techcrunch.com/wp-content/uploads/2022/06/CMC_1384.jpg?w=1390&crop=1"
@@ -31,7 +39,7 @@ export const ProductComp = () => {
             <p className="text-slate-700">Quantity:</p>
             <QuantityBtn />
           </div>
-          <Button className="w-full" color="dark">
+          <Button className="w-full" color="dark" onClick={handleCartDisplay}>
             <HiPlus className="mr-2 h-4 w-4 mt-0.5" /> Add to Cart
           </Button>
           <p id="description" className="text-sm text-slate-700">
@@ -39,6 +47,7 @@ export const ProductComp = () => {
           </p>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };
