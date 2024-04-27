@@ -3,7 +3,7 @@ import { useState } from "react";
 import { IoCartOutline } from "react-icons/io5";
 import { ImBin } from "react-icons/im";
 import { useDispatch, useSelector } from "react-redux";
-import CartItems from "./CartItems";
+import CartItems, { ItemsTotal } from "./CartItems";
 import { clearCart } from "../../features/Cart/cartSlice";
 
 
@@ -48,7 +48,7 @@ export const Cart = () => {
               </div>
             </div>
             <div className="p-4 border-t-2">
-              <div className="text-sm text-slate-500 flex flex-col gap-8">
+              <div className={isCartEmpty? "text-sm text-slate-500 flex flex-col gap-8" : "hidden"}>
                 <div className="flex justify-between">
                   <p>Items</p>
                   <p>{"0.00"}</p>
@@ -58,6 +58,7 @@ export const Cart = () => {
                   <p>{"0.00"}</p>
                 </div>
               </div>
+              {!isCartEmpty && <ItemsTotal/>}
             </div>
           </div>
         </Drawer.Items>
