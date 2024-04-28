@@ -1,7 +1,12 @@
 import { RootRoutes } from "./routes";
+import Provider from "./providers";
 
 function App() {
-    return <RootRoutes />;
+    return (
+        <Provider>
+            <RootRoutes />
+        </Provider>
+    );
 }
 
 export default App;
