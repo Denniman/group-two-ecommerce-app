@@ -7,7 +7,7 @@ export function RootRoutes() {
         <BrowserRouter>
             <Routes>
                 <Route path={"/"} element={<Home />} />
-                <Route path="store/:storeName" element={<Store />} />
+                <Route path="/:storeName" element={<Store />} />
             </Routes>
         </BrowserRouter>
     );
