@@ -15,7 +15,7 @@ export const Store = () => {
         (state) => state.products
     );
 
-    const { store } = useParams();
+    const { storeName: store } = useParams();
 
     useEffect(() => {
         if (!products.length) {
