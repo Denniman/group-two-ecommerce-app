@@ -1,12 +1,13 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import { Home } from "../pages";
+import { Home, Store } from "../pages";
 
 export function RootRoutes() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/:subdirectory" element={<Home />} />
+                <Route path={"/"} element={<Home />} />
+                <Route path="/:store" element={<Store />} />
             </Routes>
         </BrowserRouter>
     );
