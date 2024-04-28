@@ -1,5 +1,5 @@
 import { useEffect, Fragment } from "react";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Header } from "../../components";
 
@@ -14,17 +14,14 @@ export const Store = () => {
     const { isLoading, products, storeName } = useSelector(
         (state) => state.products
     );
-    const { pathname } = useLocation();
-    const enteredStoreName = pathname.split("/")[1];
 
-    console.log("isLoading", isLoading);
-    console.log("products", products);
+    const { storeName: store } = useParams();
 
     useEffect(() => {
         if (!products.length) {
-            dispatch(getProducts({ storeName: enteredStoreName }));
+            dispatch(getProducts({ storeName: store }));
         }
-    }, [dispatch, products, enteredStoreName]);
+    }, [dispatch, products, store]);
 
     if (isLoading) {
         return <LoadingSpiner />;
