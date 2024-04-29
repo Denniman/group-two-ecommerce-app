@@ -14,8 +14,6 @@ const cartSlice = createSlice({
                 (item) => item.id === newItem.id
             );
 
-            console.log("newItem", newItem);
-
             if (!existingItem) {
                 state.cartItems.push({
                     ...newItem,
