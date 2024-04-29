@@ -2,10 +2,13 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import { toast } from "sonner";
 import { Card } from "flowbite-react";
+import { useSelector, useDispatch } from "react-redux";
 import { HiMiniMinusSmall } from "react-icons/hi2";
 import { HiOutlinePlusSm } from "react-icons/hi";
 
 import { formatPrice } from "../../helper";
+
+import { increaseQuantity } from "../../providers/cart";
 
 export const ProductsList = ({
     id,
@@ -17,15 +20,19 @@ export const ProductsList = ({
     productName,
     productImage,
 }) => {
+    const dispatch = useDispatch();
     const [productQuantity, setProductQuantity] = useState(1);
+    const { settings } = useSelector((state) => state.products);
 
     const handleProductQuantity = () => {
         if (productQuantity >= quantity) {
             toast.error(
                 "Sorry, you can't exceed the total units of the product"
             );
+            return;
         } else {
             setProductQuantity((prev) => Math.min(prev + 1, quantity));
+            dispatch(increaseQuantity({ id, quantity: productQuantity }));
         }
     };
 
@@ -34,9 +41,12 @@ export const ProductsList = ({
     };
 
     return (
-        <div className="flex justify-center items-center gap-5">
+        <div
+            style={{ color: `${settings.color}` }}
+            className="flex justify-center items-center gap-5"
+        >
             <div>
-                <h1 className="text-base font-semibold tracking-tight mt-5 text-gray-700">
+                <h1 className="text-base subpixel-antialiased uppercase font-semibold tracking-tight mt-5 ">
                     {category.categoryName} / {productName}
                 </h1>
                 <Card
@@ -44,7 +54,7 @@ export const ProductsList = ({
                     imgAlt={productImage}
                     imgSrc={productImage}
                 >
-                    <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                    <h5 className="text-xl font-semibold tracking-tight dark:text-white">
                         {productName}
                     </h5>
                     <p>{description}</p>
@@ -107,7 +117,7 @@ export const ProductsList = ({
                         </div>
                     </div>
                     <div className="flex items-center justify-between">
-                        <span className="text-xl font-bold text-gray-900 dark:text-white">
+                        <span className="text-xl  font-bold  dark:text-white">
                             ₦{formatPrice(amount)}
                         </span>
                         <button
@@ -116,7 +126,7 @@ export const ProductsList = ({
                                     id,
                                     amount,
                                     productName,
-                                    productImage,
+                                    quantity: productQuantity,
                                 })
                             }
                             className="rounded-lg bg-cyan-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-cyan-800 focus:outline-none focus:ring-4 focus:ring-cyan-300 dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800"

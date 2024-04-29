@@ -10,18 +10,18 @@ import { QuantityBtn } from "../Buttons";
 import { formatPrice } from "../../helper";
 
 export const Cart = () => {
-    const { items } = useSelector((state) => state.cart);
     const [isOpen, setIsOpen] = useState(false);
+    const { cartItems } = useSelector((state) => state.cart);
+    const { settings } = useSelector((state) => state.products);
 
     const isCartEmpty = true;
 
-    console.log("items", items);
-    const cartItemsCount = items?.length;
-    const emptyCart = items.length < 1;
+    const cartItemsCount = cartItems?.length;
+    const emptyCart = cartItems?.length < 1;
 
     const handleClose = () => setIsOpen(false);
 
-    const totalPrice = items.reduce((accu, curr) => accu + curr.amount, 0);
+    const totalPrice = cartItems?.reduce((accu, curr) => accu + curr.amount, 0);
 
     return (
         <div>
@@ -32,6 +32,10 @@ export const Cart = () => {
                 </div>
             </Button>
             <Drawer
+                style={{
+                    color: `${settings.color}`,
+                    backgroundColor: `${settings.backgroundColor}`,
+                }}
                 open={isOpen}
                 onClose={handleClose}
                 position="right"
@@ -55,8 +59,8 @@ export const Cart = () => {
                         )}
 
                         <ul className="flex flex-col gap-5">
-                            {items.length &&
-                                items.map(
+                            {cartItems?.length &&
+                                cartItems?.map(
                                     ({ quantity, id, amount, productName }) => (
                                         <li
                                             className="text-sm w-full flex justify-between "
@@ -104,7 +108,12 @@ export const Cart = () => {
                             </div>
                         </div>
                         <div className="p-4 border-t-2 w-full">
-                            <div className="text-sm text-slate-500 flex flex-col gap-8">
+                            <div
+                                style={{
+                                    color: `${settings.color}`,
+                                }}
+                                className="text-sm text-slate-500 flex flex-col gap-8"
+                            >
                                 <div className="flex justify-between">
                                     <p>Items</p>
                                     <p>{cartItemsCount}</p>
@@ -121,6 +130,10 @@ export const Cart = () => {
                             </div>
 
                             <Button
+                                style={{
+                                    color: `${settings.backgroundColor}`,
+                                    backgroundColor: `${settings.color}`,
+                                }}
                                 className="w-full mt-5"
                                 size="lg"
                                 color="dark"
